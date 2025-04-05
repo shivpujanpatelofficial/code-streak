@@ -1,0 +1,22 @@
+name: Auto Daily Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # runs every day at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Make a commit
+      run: |
+        echo "Auto commit at $(date)" >> log.txt
+        git config --global user.email "shivpujanpatel991@gmail.com"
+        git config --global user.name "Shivpujan Patel"
+        git add .
+        git commit -m "chore: automated commit $(date)"
+        git push
